@@ -7,6 +7,7 @@ NULL
 #' @inheritParams RunAzimuth
 #' @param reference Name of reference to map to or a path to a directory containing ref.Rds and idx.annoy
 #' @param annotation.levels list of annotation levels to map. If not specified, all will be mapped.
+#' @param homolog.table.path path to file https://seurat.nygenome.org/azimuth/references/homologs.rds.
 #' @param umap.name name of umap reduction in the returned object
 #' @param do.adt transfer ADT assay
 #' @param assay query assay name
@@ -23,6 +24,7 @@ NULL
 RunAzimuth.Seurat <- function(
   query,
   reference,
+  homolog.table.path,
   query.modality = "RNA",
   annotation.levels = NULL,
   umap.name = "ref.umap",
@@ -100,7 +102,8 @@ RunAzimuth.Seurat <- function(
     query <- ConvertGeneNames(
       object = query,
       reference.names = rownames(x = reference),
-      homolog.table = 'https://seurat.nygenome.org/azimuth/references/homologs.rds'
+      # homolog.table = 'https://seurat.nygenome.org/azimuth/references/homologs.rds'
+      homolog.table = homolog.table.path
     )
     
     # Calculate nCount_RNA and nFeature_RNA if the query does not
